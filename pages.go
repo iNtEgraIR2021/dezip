@@ -14,8 +14,6 @@ import (
 
     "github.com/yuin/goldmark"
     "github.com/yuin/goldmark/extension"
-
-    "dezip.org/dezip/tmlanguage"
 )
 
 type page struct {
@@ -161,7 +159,7 @@ func (p page) writeDirectoryPage(w io.Writer, dirs map[string]*archiveDirectory)
     if len(dir.readmeName) > 0 {
         fmt.Fprintln(w, "        <tr class='border'>")
         fmt.Fprintln(w, "          <td class='category' valign='top'>README</td><td colspan='4' class='readme'><div class='readme-container'>");
-        p.writeFileContents(w, nil, dir.entries[dir.readmeName], defaultContentType(dir.entries[dir.readmeName]))
+        p.writeFileContents(w, dir.entries[dir.readmeName], defaultContentType(dir.entries[dir.readmeName]))
         fmt.Fprintln(w, "          </div></td>");
         fmt.Fprintln(w, "        </tr>")
     }
@@ -170,7 +168,7 @@ func (p page) writeDirectoryPage(w io.Writer, dirs map[string]*archiveDirectory)
     p.writeEpilogue(w)
 }
 
-func (p page) writeFilePage(w io.Writer, h *tm.Highlighter, entry *archiveDirectoryEntry, contentType contentType) {
+func (p page) writeFilePage(w io.Writer, entry *archiveDirectoryEntry, contentType contentType) {
     p.writePrologue(w)
     p.writeHeader(w, headerOptions{})
     fmt.Fprintln(w, "    <table class='file'>")
@@ -186,7 +184,7 @@ func (p page) writeFilePage(w io.Writer, h *tm.Highlighter, entry *archiveDirect
             p.writeLineNumbers(w, 1, entry.lines)
             fmt.Fprint(w, "<td valign='top'>")
         }
-        p.writeFileContents(w, h, entry, contentType)
+        p.writeFileContents(w, entry, contentType)
         fmt.Fprint(w, "</td>")
     }
     fmt.Fprintln(w, "</tr>")
@@ -194,7 +192,7 @@ func (p page) writeFilePage(w io.Writer, h *tm.Highlighter, entry *archiveDirect
     p.writeEpilogue(w)
 }
 
-func (p page) writeFileContents(w io.Writer, h *tm.Highlighter, entry *archiveDirectoryEntry, contentType contentType) {
+func (p page) writeFileContents(w io.Writer, entry *archiveDirectoryEntry, contentType contentType) {
     if entry.lines < 0 {
         fmt.Fprintln(w, "<div class='empty'>binary file</div>")
         return
@@ -223,18 +221,11 @@ func (p page) writeFileContents(w io.Writer, h *tm.Highlighter, entry *archiveDi
     } else {
         fmt.Fprintln(w, "<pre class='code file-contents'>");
         fmt.Fprint(w, beginSearchMarker)
-        if h == nil || entry.maximumLineLength > lineLengthLimit {
-            buf := &strings.Builder{}
-            io.Copy(buf, rc)
-            fmt.Fprint(w, html.EscapeString(buf.String()))
-        } else {
-            buf, err := ioutil.ReadAll(rc)
-            if err != nil {
-                fmt.Fprint(w, "error: ", html.EscapeString(err.Error()))
-            } else {
-                h.Highlight(highlightWriter{w}, buf, entry.file.Name)
-            }
-        }
+
+        buf := &strings.Builder{}
+        io.Copy(buf, rc)
+        fmt.Fprint(w, html.EscapeString(buf.String()))
+
         fmt.Fprint(w, endSearchMarker)
         fmt.Fprintln(w, "</pre>");
     }

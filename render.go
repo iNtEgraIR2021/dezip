@@ -20,9 +20,6 @@ import (
     "strings"
     "sync"
     "time"
-
-    "howett.net/plist"
-    "dezip.org/dezip/tmlanguage"
 )
 
 type archive struct {
@@ -755,29 +752,12 @@ func loadArchivesFromMetadata(metaPath string) (map[string]*archive, error) {
 
 // -- renderer
 
-type renderer struct {
-    highlighter *tm.Highlighter
-}
+type renderer struct {}
+
 func newRenderer(syntaxDefinitionPaths []string) *renderer {
-    languages := make([]*tm.Language, len(syntaxDefinitionPaths))
-    for i, _ := range languages {
-        rc, err := os.Open(syntaxDefinitionPaths[i])
-        if err == nil {
-            decoder := plist.NewDecoder(rc)
-            languages[i] = &tm.Language{}
-            err = decoder.Decode(languages[i])
-            rc.Close()
-        }
-        if err != nil {
-            log.Print("error loading ", syntaxDefinitionPaths[i], ": ", err)
-        }
-    }
-    h, err := tm.NewHighlighter(languages, highlightScopeForScopeName)
-    if err != nil {
-        log.Fatal(err)
-    }
-    return &renderer{h}
+    return &renderer{}
 }
+
 func (r *renderer) renderLoop(c *cache) {
     for {
         c.mutex.Lock()
@@ -879,6 +859,6 @@ func (r *renderer) render(filename string, archiveURL string, entry *archiveDire
     w := bufio.NewWriter(f)
     defer w.Flush()
     p := page{ name: entry.file.Name, archiveURL: archiveURL }
-    p.writeFilePage(w, r.highlighter, entry, contentType)
+    p.writeFilePage(w, entry, contentType)
     return
 }
