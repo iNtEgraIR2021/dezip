@@ -1,0 +1,512 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+:root {
+    /* a dark text color in elinks on a dark terminal is hard to read. */
+    /* set the text color using css variables, which elinks doesn't support. */
+    --text-color: #334;
+}
+body {
+    padding: 6px;
+    color: var(--text-color);
+    -webkit-text-size-adjust: 100%;
+}
+html {
+    min-height: 100%;
+}
+a {
+    /* disable double-tap-to-zoom on links in order to reduce latency on iOS. */
+    touch-action: manipulation;
+}
+pre.code {
+    font-size: 0.75em;
+    line-height: 1.5em;
+    font-family: 'Menlo', 'Monaco', monospace;
+}
+pre.file-contents {
+    padding: 6px;
+    padding-left: 0;
+}
+pre.line-numbers {
+    padding-right: 20px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+pre.header {
+    font-size: 1.1em;
+    background-color: #56a;
+    color: white;
+    padding: 20px 30px;
+    padding-left: 75px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+pre.header a {
+    color: #cdf;
+    stroke: #cdf;
+    fill: #cdf;
+    font-weight: bold;
+    text-decoration: none;
+}
+pre.header a:hover {
+    color: white;
+    stroke: white;
+    fill: white;
+}
+pre.header a.logo {
+    display: block;
+    position: absolute;
+    top: 7px;
+    bottom: 6px;
+    left: 0;
+    width: 75px;
+}
+pre.header a.logo > svg {
+    display: block;
+    margin: auto;
+    height: 100%;
+}
+pre.header > .search-button {
+    display: block;
+    position: absolute;
+    width: 65px;
+    top: 6px;
+    right: 0;
+    bottom: 6px;
+    background-color: #56a;
+}
+pre.header .search-button > svg {
+    display: block;
+    margin: auto;
+    height: 100%;
+}
+pre#search-header {
+    background-color: white;
+}
+pre#search-header:not(.searching) {
+    position: fixed;
+    left: 6px;
+    right: 6px;
+    top: 6px;
+    visibility: hidden;
+}
+pre#search-header.searching {
+    border-radius: 0;
+    padding: 18px 30px;
+}
+
+pre#search-header > .search-button {
+    background-color: transparent;
+    color: var(--text-color);
+    stroke: var(--text-color);
+}
+pre#search-header > .search-button:first-child {
+    right: auto;
+    left: 0;
+}
+pre#search-header > a.search-button:hover {
+    color: #99a;
+    stroke: #99a;
+}
+pre#search-header input {
+    display: inherit;
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    /* firefox needs an explicit width/height for input elements. */
+    box-sizing: border-box;
+    padding: 10px 65px;
+    width: 100%;
+    height: 100%;
+
+    font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 0.75em;
+
+    color: var(--text-color);
+
+    outline: none;
+    border: none;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    touch-action: manipulation;
+}
+pre#search-header input::placeholder {
+    color: #ccd;
+}
+.search-result {
+    font-weight: bold;
+    background-color: rgba(171, 180, 217, 0.15);
+    border-radius: 5px;
+    margin: -4px -4px;
+    padding: 4px 4px;
+    text-decoration: none;
+    color: inherit;
+    scroll-snap-margin: 100px 0;
+    scroll-margin: 100px 0;
+}
+a.search-result:hover {
+    background-color: rgba(171, 180, 217, 0.4);
+}
+table.search-results {
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+table.search-results > tbody > tr > td {
+    padding: 6px 0;
+}
+table.search-results > tbody > tr.border > td {
+    border-top: 1px solid #eef0f8;
+}
+table.search-results > tbody > tr.border > td:first-child {
+    border-top: 1px solid white;
+}
+table.search-results > tbody > tr.full-border > td {
+    border-top: 1px solid #eef0f8;
+}
+table.search-results > tbody > tr > td.filename {
+    padding: 0 20px;
+    border-bottom: 1px solid #eef0f8;
+    padding-top: 4px;
+}
+#blur {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    touch-action: manipulation;
+}
+#progress-overlay {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,50%);
+    border-radius: 0 5px 5px 0;
+    pointer-events: none;
+}
+
+.markdown {
+    margin: 20px 64px;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+.markdown p {
+    line-height: 1.3em;
+    margin: 14px 0;
+}
+.markdown ul,
+.markdown ol {
+    margin: 14px 0;
+    padding-left: 30px;
+}
+.markdown ol ul,
+.markdown ul ol,
+.markdown ul ul,
+.markdown ol ol {
+    margin: 0;
+}
+.markdown li {
+    margin: 6px 0;
+}
+.markdown blockquote {
+    margin: 14px 30px;
+}
+.markdown pre {
+    padding-left: 30px;
+    overflow: auto;
+}
+.markdown code {
+    font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 0.95em;
+}
+.markdown pre code {
+    font-size: 0.75em;
+    line-height: 1.5em;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+    font-family: 'Avenir Next', 'Futura', sans-serif;
+    margin: 16px 0 14px 0;
+}
+.markdown h1 {
+    margin: 18px 0 18px 0;
+    border-bottom: 1px solid #eef0f8;
+}
+.markdown h2 {
+    margin: 18px 0 16px 0;
+    border-bottom: 1px solid #eef0f8;
+}
+.markdown table {
+    border-collapse: collapse;
+    margin: 14px 0;
+}
+.markdown table td,
+.markdown table th {
+    padding: 6px;
+    border: 1px solid #eef0f8;
+}
+
+.markdown a {
+    color: #4d64bd;
+    font-weight: 500;
+    text-decoration: none;
+}
+.markdown a:hover {
+    text-decoration: underline;
+}
+
+table.file {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+table.file pre.line-numbers {
+    padding: 6px;
+    padding-right: 20px;
+}
+table.file .markdown {
+    margin-left: 0;
+}
+tr.dblborder > td {
+    border-top: 3px double #eef0f8 !important;
+}
+tr.fileborder > td {
+    border-top: 1px solid #eef0f8 !important;
+}
+tr.readmeborder > td {
+    border-top: 2px solid #eef0f8 !important;
+}
+tr.noborder > td {
+    border-top: none !important;
+}
+.directory {
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+td.filename {
+    font-size: 0.9em;
+}
+td.filename > * {
+    padding: 6px 0;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    /* this is to work around a webkit bug where an initial "j" has its
+     * descender clipped at certain widths. */
+    margin-left: -1px;
+    padding-left: 1px;
+}
+td.filename a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
+}
+td.filename a.adjust-for-dblborder {
+    padding-bottom: 4px;
+}
+td.filename a:not([href]) {
+    color: #eef0f8;
+}
+td.filename a[href]:hover {
+    color: #45c;
+    text-decoration: underline;
+}
+.empty {
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    color: #ccd;
+    text-align: left;
+    margin: 6px 0;
+}
+table.directory {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    grid-column: 2;
+}
+table.directory > tbody > tr > td {
+    font-size: 0.9em;
+    border-top: 1px solid #eef0f8;
+    color: #678;
+    text-align: right;
+}
+table.directory > tbody > tr > td.readme {
+    font-size: 1em;
+}
+table.directory > tbody > tr:first-child > td {
+    border: none;
+}
+table.directory > tbody > tr > td.filename {
+    text-align: left;
+    color: inherit;
+}
+table.directory > tbody > tr > td:first-child {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+    width: 120px;
+}
+table.directory > tbody > tr > td:first-child:not(.category) {
+    border: none;
+}
+tr.back {
+    color: #ccd;
+}
+.prefix {
+    font-weight: normal;
+    color: #678;
+}
+a:hover > .prefix {
+    color: inherit;
+}
+.light {
+    font-weight: 200;
+}
+table.directory > tbody > tr > td.category {
+    padding: 6px 0;
+    text-align: left;
+    vertical-align: top;
+    color: #89a;
+}
+table.directory > tbody > tr:hover > td:not(.category) {
+    color: inherit;
+}
+table.directory > tbody > tr:hover .prefix {
+    color: inherit;
+}
+.directory-container {
+    padding: 0 30px 20px 30px;
+    display: grid;
+    grid-template-columns: 1fr auto 1.35fr;
+}
+.readme-container {
+    color: black;
+    color: var(--text-color);
+    text-align: initial;
+    overflow: auto;
+}
+.readme .markdown {
+    margin: 0;
+}
+table.directory td.readme-name {
+    color: #d2d6e6;
+}
+.size-column {
+    width: 22%;
+}
+.mod-date-column {
+    width: 22%;
+}
+.line-numbers-column {
+    width: 64px;
+}
+
+@media (max-width: 670px) {
+    .markdown {
+        margin: 20px 0;
+    }
+    table.directory > tbody > tr > td:first-child {
+        width: 0;
+        visibility: hidden;
+    }
+    .size-column {
+        width: 75px;
+    }
+    .mod-date-column {
+        width: 95px;
+    }
+    table.file .line-numbers-column {
+        width: 6px;
+    }
+    table.file pre.line-numbers {
+        display: none;
+    }
+    .directory-container {
+        padding: 0 6px 6px 6px;
+    }
+    pre.header {
+        font-size: 0.95em;
+    }
+    .abbr > span {
+        display: none;
+    }
+    .abbr-subdirectory::after {
+        content: 'subdir';
+    }
+    .abbr-subdirectories::after {
+        content: 'subdirs';
+    }
+    .abbr-january::after {
+        content: 'jan';
+    }
+    .abbr-february::after {
+        content: 'feb';
+    }
+    .abbr-march::after {
+        content: 'mar';
+    }
+    .abbr-april::after {
+        content: 'apr';
+    }
+    .abbr-may::after {
+        content: 'may';
+    }
+    .abbr-june::after {
+        content: 'jun';
+    }
+    .abbr-july::after {
+        content: 'jul';
+    }
+    .abbr-august::after {
+        content: 'aug';
+    }
+    .abbr-september::after {
+        content: 'sep';
+    }
+    .abbr-october::after {
+        content: 'oct';
+    }
+    .abbr-november::after {
+        content: 'nov';
+    }
+    .abbr-december::after {
+        content: 'dec';
+    }
+}
+
+@media (max-width: 550px) {
+    pre.code {
+        font-size: 0.65em;
+    }
+}
+
+@media (max-width: 475px) {
+    pre.code {
+        font-size: 0.55em;
+    }
+}
