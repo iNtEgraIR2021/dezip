@@ -26,4 +26,14 @@ see [BUILD.md](BUILD.md) for build instructions.
 
 ## who made this?
 
-dezip was made by **ian henderson**.  feel free to email me at [ian@ianhenderson.org](mailto:ian@ianhenderson.org) or contact me on twitter at [@ianh_](https://twitter.com/ianh_).
+dezip was originally made by **ian henderson**, and this fork is maintained by **jason dsouza**
+
+## Todo
+
+- Clean up residual `tm.highlighter` references
+- Remove support (and dependencies) for unneeded protocols (ftp, gopher, gemini)
+- Remove support for non-stdlib archive formats (xz)
+- Add client-side syntax highlighting
+- Add support for uncompressed files
+- Add more logging output
+
