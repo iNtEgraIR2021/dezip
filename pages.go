@@ -365,6 +365,9 @@ func (p page) writePrologue(w io.Writer) {
 	fmt.Fprintln(w, "    <meta charset='utf-8'>")
 	fmt.Fprintln(w, "    <meta name='viewport' content='initial-scale=0.9'>")
 	fmt.Fprintln(w, "    <link href='/style.css' rel='stylesheet'>")
+	fmt.Fprintln(w, "    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/tomorrow.min.css'>")
+	fmt.Fprintln(w, "    <script src='//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js'></script>")
+	fmt.Fprintln(w, "    <script>hljs.highlightAll();</script>")
 }
 
 type headerOptions struct {

@@ -187,3 +187,11 @@ if (navigator.userAgent.match(/\bAppleWebKit\b/) &&
         }
     });
 }
+
+// -- syntax highlighting
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('pre.code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
+});
+

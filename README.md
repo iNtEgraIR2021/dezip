@@ -28,9 +28,12 @@ see [BUILD.md](BUILD.md) for build instructions.
 
 dezip was originally made by **ian henderson**, and this fork is maintained by **jason dsouza**
 
-## Todo
+## todo
 
-- Add client-side syntax highlighting
 - Add support for uncompressed files
 - Add more logging output
+
+## developing
+
+- since pages get pre-rendered, if you change something about the page, make sure to clear out the cache on disk in order to see your changes
 
