@@ -32,6 +32,7 @@ dezip was originally made by **ian henderson**, and this fork is maintained by *
 
 - Add support for uncompressed files
 - Add more logging output
+- Add support for navigating to a specific line in a file
 
 ## developing
 
