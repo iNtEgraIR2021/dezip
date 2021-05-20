@@ -754,7 +754,7 @@ func loadArchivesFromMetadata(metaPath string) (map[string]*archive, error) {
 
 type renderer struct {}
 
-func newRenderer(syntaxDefinitionPaths []string) *renderer {
+func newRenderer() *renderer {
     return &renderer{}
 }
 

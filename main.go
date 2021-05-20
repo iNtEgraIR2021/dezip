@@ -7,7 +7,6 @@ import (
     "compress/gzip"
     "fmt"
     "io"
-    "io/ioutil"
     "log"
     "net/http"
     "net/url"
@@ -47,20 +46,17 @@ const archivePathLimit = 255
 const archiveComponentLimit = 99
 
 // files above this limit aren't rendered.
-const textFileSizeLimit = 50_000_000 // 50 MB
+const textFileSizeLimit = 10_000_000 // 10 MB
 
 // archives with a directory having more than this number of entries will fail
 // to render.
 const entriesPerDirectoryLimit = 99999
 
 // downloads over this limit will fail.
-const archiveSizeLimit = 1_000_000_000 // 1 GB
+const archiveSizeLimit = 100_000_000 // 100 MB
 
 // unpacking an archive larger than this limit will fail.
-const uncompressedArchiveSizeLimit = 3_000_000_000 // 3 GB
-
-// files with lines longer than this won't get syntax highlighting.
-const lineLengthLimit = 1000
+const uncompressedArchiveSizeLimit = 300_000_000 // 300 MB
 
 // the maximum number of "weird" characters above 0xF4 that can appear before a
 // file is considered a binary file.
@@ -173,21 +169,9 @@ func main() {
         c.archiveURLsToReclaim = append(c.archiveURLsToReclaim, v.url)
     }
 
-    // find tmlanguage files.
-    var languages []string
-    if syntaxEnv, ok := os.LookupEnv("DEZIP_SYNTAX"); ok {
-        files, err := ioutil.ReadDir(syntaxEnv)
-        if err != nil {
-            log.Fatal(err)
-        }
-        for _, file := range files {
-            languages = append(languages, path.Join(syntaxEnv, file.Name()))
-        }
-    }
-
     // start the renderer goroutines.
     for i := 0; i < numberOfRenderers; i++ {
-        go newRenderer(languages).renderLoop(c)
+        go newRenderer().renderLoop(c)
     }
 
     // start the reclamation goroutine.
