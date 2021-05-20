@@ -22,9 +22,6 @@ import (
     "syscall"
     "time"
 
-    "github.com/makeworld-the-better-one/go-gemini"
-    "github.com/prologic/go-gopher"
-
     "github.com/xi2/xz"
 )
 
@@ -117,8 +114,6 @@ func main() {
         log.Fatal(err)
     }
     protocols = map[string]protocol{
-        "gemini": geminiProtocol{},
-        "gopher": gopherProtocol{},
         "http": httpProtocol{},
         "https": httpProtocol{},
     }
@@ -615,26 +610,5 @@ func (p httpProtocol) fetch(url string) (response, error) {
         return response{}, fmt.Errorf("%s when fetching %s", res.Status, url)
     }
     return response{ res.Body, res.ContentLength }, nil
-}
-
-type gopherProtocol struct {}
-func (p gopherProtocol) fetch(url string) (response, error) {
-    res, err := gopher.Get(url)
-    if err != nil {
-        return response{}, err
-    }
-    if res.Body == nil {
-        return response{}, fmt.Errorf("gopher response had nil body - is this a directory page?")
-    }
-    return response{ res.Body, -1 }, nil
-}
-
-type geminiProtocol struct {}
-func (p geminiProtocol) fetch(url string) (response, error) {
-    res, err := gemini.DefaultClient.Fetch(url)
-    if err != nil {
-        return response{}, err
-    }
-    return response{ res.Body, -1 }, nil
 }
 
