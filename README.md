@@ -12,7 +12,7 @@ discomfort with the centralization of software development into sites like githu
 
 ## which protocols and archive formats are supported?
 
-currently, the following protocols are supported: `ftp://`, `gemini://`, `gopher://`, `http://`, and `https://`; and the following archive formats, identified by file extension: `.zip`, `.tgz`, `.tar.gz`, `.tb2`, `.tbz`, `.tbz2`, `.tar.bz2`, `.txz`, and `.tar.xz`.
+currently, the following protocols are supported: `http://`, and `https://`; and the following archive formats, identified by file extension: `.zip`, `.tgz`, `.tar.gz`, `.tb2`, `.tbz`, `.tbz2`, `.tar.bz2`, `.txz`, and `.tar.xz`.
 
 ## is there a way to search?
 

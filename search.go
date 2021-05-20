@@ -25,8 +25,8 @@ const endSearchMarker = "<!-- END SEARCH -->"
 //   2  [match]
 //   3  ...
 //   4  ...
-const matchContextLinesBefore = 2
-const matchContextLinesAfter = 2
+const matchContextLinesBefore = 3
+const matchContextLinesAfter = 3
 
 type searchResult struct {
 	file      string
