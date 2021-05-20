@@ -22,7 +22,6 @@ import (
     "syscall"
     "time"
 
-    "github.com/jlaffaye/ftp"
     "github.com/makeworld-the-better-one/go-gemini"
     "github.com/prologic/go-gopher"
 
@@ -76,7 +75,7 @@ const indexFileName = "hidden.from.dezip.html"
 const searchTimeoutSeconds = 20
 
 // the maximum number of search results (to avoid overloading browsers).
-const searchResultLimit = 99999
+const searchResultLimit = 9999
 
 // a singleton closed channel that's initialized in main().
 var closedChannel chan struct{}
@@ -118,7 +117,6 @@ func main() {
         log.Fatal(err)
     }
     protocols = map[string]protocol{
-        "ftp": ftpProtocol{},
         "gemini": geminiProtocol{},
         "gopher": gopherProtocol{},
         "http": httpProtocol{},
@@ -640,33 +638,3 @@ func (p geminiProtocol) fetch(url string) (response, error) {
     return response{ res.Body, -1 }, nil
 }
 
-type ftpProtocol struct {}
-func (p ftpProtocol) fetch(rawurl string) (response, error) {
-    url, err := url.Parse(rawurl)
-    if err != nil {
-        return response{}, err
-    }
-    host := url.Host
-    // this doesn't work with ipv6 addresses... but who is connecting to an ftp
-    // server via a raw ipv6 address?  and why doesn't the go standard library
-    // provide a reliable way to append a port to a hostname?
-    if !strings.Contains(host, ":") {
-        host += ":21"
-    }
-    conn, err := ftp.Dial(host)
-    if err != nil {
-        return response{}, err
-    }
-    conn.Login("anonymous", "anonymous")
-    res := response{ contentLength: -1 }
-    entries, err := conn.List(url.Path)
-    if err == nil && len(entries) == 1 {
-        res.contentLength = int64(entries[0].Size)
-    }
-    res.body, err = conn.Retr(url.Path)
-    if err != nil {
-        conn.Quit()
-        return response{}, err
-    }
-    return res, nil
-}
