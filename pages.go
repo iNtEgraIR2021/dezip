@@ -231,59 +231,6 @@ func (p page) writeFileContents(w io.Writer, entry *archiveDirectoryEntry, conte
     }
 }
 
-type highlightScope struct {
-    beginTags string
-    endTags string
-}
-func highlightScopeForScopeName(scope string) interface{} {
-    if scope == "storage.modifier.local.lua" {
-        return highlightScope{ "<font color=#f00><i>", "</i></font>" }
-    } else if strings.HasPrefix(scope, "storage.type.") || strings.HasPrefix(scope, "support.type.") {
-        return highlightScope{ "<font color=#56a>", "</font>" }
-    } else if strings.HasPrefix(scope, "support.constant.") {
-        return highlightScope{ "<font color=#88f>", "</font>" }
-    } else if strings.HasPrefix(scope, "support.variable.") {
-        return highlightScope{ "<font color=#4d64bd><i>", "</i></font>" }
-    } else if strings.HasPrefix(scope, "support.") {
-        return highlightScope{ "<font color=#4d64bd>", "</font>" }
-    } else if strings.HasPrefix(scope, "constant.") {
-        return highlightScope{ "<font color=#88f>", "</font>" }
-    } else if strings.HasPrefix(scope, "variable.") {
-        return highlightScope{ "<i>", "</i>" }
-    } else if strings.HasPrefix(scope, "entity.") && scope != "entity.name.function.full-name.go" {
-        return highlightScope{ "<font color=#4d64bd><i>", "</i></font>" }
-    } else if strings.HasPrefix(scope, "comment.") {
-        return highlightScope{ "<font color=#778>", "</font>" }
-    } else if strings.HasPrefix(scope, "string.") {
-        return highlightScope{ "<font color=#7979c4>", "</font>" }
-    } else if strings.HasPrefix(scope, "storage.") {
-        return highlightScope{ "<font color=#56a>", "</font>" }
-    } else if strings.HasPrefix(scope, "keyword.") && !strings.HasPrefix(scope, "keyword.operator.") {
-        return highlightScope{ "<font color=#f00>", "</font>" }
-    } else {
-        return nil
-    }
-}
-type highlightWriter struct {
-    w io.Writer
-}
-func (w highlightWriter) Write(bytes []byte) (int, error) {
-    _, err := fmt.Fprint(w.w, html.EscapeString(string(bytes)))
-    return len(bytes), err
-}
-func (w highlightWriter) BeginScope(scope interface{}) error {
-    _, err := fmt.Fprint(w.w, scope.(highlightScope).beginTags)
-    return err
-}
-func (w highlightWriter) EndScope(scope interface{}) error {
-    _, err := fmt.Fprint(w.w, scope.(highlightScope).endTags)
-    return err
-}
-func (w highlightWriter) NewLine() error {
-    _, err := fmt.Fprint(w.w, "\n")
-    return err
-}
-
 func (p page) writeLineNumbers(w io.Writer, firstLine int, lines int) {
     fmt.Fprint(w, "<td align='right' valign='top'><pre class='code line-numbers'><font color='#acb4bd'>")
     for i := 0; i < lines; i++ {

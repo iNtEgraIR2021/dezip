@@ -30,9 +30,6 @@ dezip was originally made by **ian henderson**, and this fork is maintained by *
 
 ## Todo
 
-- Clean up residual `tm.highlighter` references
-- Remove support (and dependencies) for unneeded protocols (ftp, gopher, gemini)
-- Remove support for non-stdlib archive formats (xz)
 - Add client-side syntax highlighting
 - Add support for uncompressed files
 - Add more logging output
