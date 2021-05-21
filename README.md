@@ -20,7 +20,7 @@ yeah!  click the **magnifying glass button** or press **f** to bring up the sear
 
 ## where can i find the source code?
 
-the current version is available here: [dezip-1.0.zip](https://dezip.org/dezip-1.0.zip) [[browse](https://dezip.org/https://dezip.org/dezip-1.0.zip)]
+the latest release is available [here](https://github.com/jasonrdsouza/dezip/releases), or you can [browse the code on github](https://github.com/jasonrdsouza/dezip) (until we start self hosting).
 
 see [BUILD.md](BUILD.md) for build instructions.
 
