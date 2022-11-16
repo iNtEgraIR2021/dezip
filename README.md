@@ -12,7 +12,7 @@ discomfort with the centralization of software development into sites like githu
 
 ## which protocols and archive formats are supported?
 
-currently, the following protocols are supported: `http://`, and `https://`; and the following archive formats, identified by file extension: `.zip`, `.tgz`, `.tar.gz`, `.tb2`, `.tbz`, `.tbz2`, `.tar.bz2`, `.txz`, and `.tar.xz`.
+currently, the following protocols are supported: `ftp://`, `gemini://`, `gopher://`, `http://`, and `https://`; and the following archive formats, identified by file extension: `.zip`, `.tgz`, `.tar.gz`, `.tb2`, `.tbz`, `.tbz2`, `.tar.bz2`, `.txz`, and `.tar.xz`.
 
 ## is there a way to search?
 
@@ -20,22 +20,10 @@ yeah!  click the **magnifying glass button** or press **f** to bring up the sear
 
 ## where can i find the source code?
 
-the latest release is available [here](https://github.com/jasonrdsouza/dezip/releases), or you can [browse the code on github](https://github.com/jasonrdsouza/dezip) (until we start self hosting).
+the current version is available here: [dezip-1.0.zip](https://dezip.org/dezip-1.0.zip) [[browse](https://dezip.org/https://dezip.org/dezip-1.0.zip)]
 
 see [BUILD.md](BUILD.md) for build instructions.
 
 ## who made this?
 
-dezip was originally made by **ian henderson**, and this fork is maintained by **jason dsouza**
-
-## todo
-
-- Add support for uncompressed files
-- Add more logging output
-- Add support for navigating to a specific line in a file
-- Add darkmode support
-
-## developing
-
-- since pages get pre-rendered, if you change something about the page, make sure to clear out the cache on disk in order to see your changes
-
+dezip was made by **ian henderson**.  feel free to email me at [ian@ianhenderson.org](mailto:ian@ianhenderson.org) or contact me on twitter at [@ianh_](https://twitter.com/ianh_).

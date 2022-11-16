@@ -510,3 +510,18 @@ table.directory td.readme-name {
         font-size: 0.55em;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        /* background-color: #334; */
+    }
+}
+
+@media print {
+    body {
+        filter: none;
+        color:rgba(0, 0, 0, 1)!important;
+        background-color: transparent;
+        max-width: 99%;
+    }
+}

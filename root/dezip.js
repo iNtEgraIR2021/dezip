@@ -1,11 +1,11 @@
 // -- search
 
-var searchIsOpen = false;
-var searchField = document.getElementById("search-field");
-var originalSearch = searchField.value;
+let searchIsOpen = false;
+let searchField = document.getElementById("search-field");
+let originalSearch = searchField.value;
 function openSearch(event) {
     searchIsOpen = true;
-    var blur = document.createElement("div");
+    let blur = document.createElement("div");
     blur.id = "blur";
     blur.onclick = closeSearch;
     document.body.insertBefore(blur, document.body.firstChild);
@@ -18,7 +18,7 @@ function openSearch(event) {
 }
 function closeSearch(event) {
     searchIsOpen = false;
-    var blur = document.getElementById("blur");
+    let blur = document.getElementById("blur");
     blur.parentNode.removeChild(blur);
     searchField.blur();
     document.getElementById("search-header").style.visibility = "hidden";
@@ -26,7 +26,7 @@ function closeSearch(event) {
     event.preventDefault();
     return false;
 }
-var searchIsTogglable = document.getElementById("open-search") !== null;
+let searchIsTogglable = document.getElementById("open-search") !== null;
 if (document.getElementById("open-search") !== null) {
     document.getElementById("open-search").title = "key shortcut: f";
     document.getElementById("open-search").onclick = openSearch;
@@ -40,7 +40,7 @@ if (document.getElementById("submit-search") !== null) {
         return false;
     };
 }
-var filterText = "";
+let filterText = "";
 if (document.getElementById("search-filter") !== null) {
     filterText = document.getElementById("search-filter").textContent;
     if (filterText.slice(0, 2) == " [") {
@@ -52,7 +52,7 @@ if (document.getElementById("search-filter") !== null) {
     }
 }
 function filter() {
-    var entered = prompt("search in paths matching regexp (empty to search all files):", filterText);
+    let entered = prompt("search in paths matching regexp (empty to search all files):", filterText);
     if (entered === null)
         return;
     if (entered === filterText)
@@ -61,8 +61,8 @@ function filter() {
     document.cookie = "filter=" + encodeURIComponent(filterText);
     location.search = "?search=" + encodeURIComponent(originalSearch);
 }
-var maximumFocus = 1;
-var searchResults = [];
+let maximumFocus = 1;
+let searchResults = [];
 window.addEventListener("load", function (event) {
     searchResults = document.getElementsByClassName("search-result");
     if (searchResults.length > 0) {
@@ -88,7 +88,7 @@ window.addEventListener("keydown", function (event) {
         event.preventDefault();
         return false;
     } else if (event.keyCode == 70 && !searchIsTogglable && document.activeElement !== searchField) {
-        var selection = window.getSelection().toString();
+        let selection = window.getSelection().toString();
         if (selection !== "")
             searchField.value = selection;
         searchField.focus();
@@ -97,9 +97,9 @@ window.addEventListener("keydown", function (event) {
         event.preventDefault();
         return false;
     } else if ((event.keyCode == 74 || event.keyCode == 75) && searchResults.length > 0 && (!document.activeElement || document.activeElement.tagName.toLowerCase() !== "input")) {
-        var currentFocus = parseInt(document.activeElement.id, 10);
-        if (!(currentFocus == currentFocus)) {
-            var i = 0;
+        let currentFocus = parseInt(document.activeElement.id, 10);
+        if (currentFocus != currentFocus) {
+            let i = 0;
             for (; i < searchResults.length; ++i) {
                 if (searchResults[i].getBoundingClientRect().top > 0)
                     break;
@@ -131,17 +131,17 @@ window.addEventListener("pageshow", function (event) {
 // -- progress bar
 
 if (document.getElementById("progress-overlay") !== null) {
-    var needsReload = false;
+    let needsReload = false;
     // to prevent a sudden page transition, show the progress bar for at least a
     // minimum amount of time.
-    var minimumProgressTimeout = window.setTimeout(function () {
+    let minimumProgressTimeout = window.setTimeout(function () {
         if (needsReload)
             location.reload();
         minimumProgressTimeout = null;
     }, 500);
     // grab progress updates via xhr.
-    var interval = window.setInterval(function () {
-        var xhr = new XMLHttpRequest();
+    let interval = window.setInterval(function () {
+        let xhr = new XMLHttpRequest();
         xhr.open("GET", location.href);
         xhr.responseType = "document";
         xhr.timeout = 200;
@@ -152,7 +152,7 @@ if (document.getElementById("progress-overlay") !== null) {
                 location.reload();
             else if (xhr.responseXML.getElementById("progress-overlay") === null) {
                 window.clearInterval(interval);
-                var pathHeader = document.getElementById("path-header");
+                let pathHeader = document.getElementById("path-header");
                 pathHeader.parentNode.replaceChild(xhr.responseXML.getElementById("path-header"), pathHeader);
                 if (minimumProgressTimeout !== null)
                     needsReload = true;
@@ -180,18 +180,10 @@ if (navigator.userAgent.match(/\bAppleWebKit\b/) &&
     // in order to make the tap gesture recognizer recognize faster.  but for
     // some reason it only works if there's an onclick handler.
     window.addEventListener("load", function (event) {
-        var links = document.getElementsByTagName("a");
+        let links = document.getElementsByTagName("a");
         for (var i = 0; i < links.length; ++i) {
             if (links[i].onclick === null)
                 links[i].onclick = function () {};
         }
     });
 }
-
-// -- syntax highlighting
-document.addEventListener('DOMContentLoaded', (event) => {
-  document.querySelectorAll('pre.code').forEach((block) => {
-    hljs.highlightBlock(block);
-  });
-});
-
