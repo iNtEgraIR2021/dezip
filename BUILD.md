@@ -32,7 +32,7 @@ dezip writes to 3 subdirectories of the working directory:
 
 If you want to run dezip from a different directory, make sure to copy or symlink `root/dezip.js` and `root/style.css` in order for javascript and css to work.
 
-to enable syntax highlighting, set the `DEZIP_SYNTAX` environment variable to a directory full of textmate language grammar files in `.plist` or `.tmLanguage` format. Here's the one I'm using: [https://dezip.org/syntax-2020-01-17.zip](https://dezip.org/syntax-2020-01-17.zip).
+to enable syntax highlighting, set the `DEZIP_SYNTAX` environment variable to a directory full of [textmate](https://github.com/textmate/textmate) [language grammar](https://macromates.com/manual/en/language_grammars) files in `.plist` or `.tmLanguage` format. Here's the one I'm using: [https://dezip.org/syntax-2020-01-17.zip](https://dezip.org/syntax-2020-01-17.zip).
 
 dezip.org routes http requests through nginx&mdash;rendered files are served directly from the filesystem, and other requests are forwarded to the dezip service itself.  here's a snippet of nginx config file which may be helpful if you're interested in doing that too:
 
