@@ -34,6 +34,6 @@ Syntax hightlighting for rendered Markdown content added by Petra Mirelli (@iNtE
 
 ## TODO
 
-* add dark mode
-* minify content and assets
-* use `chroma` for syntax highlighting (?)
+* add dark mode -> improve styling: more contrast and less css filter
+* minify content and assets (using [`github.com/tdewolff/minify`](https://github.com/tdewolff/minify)(?))
+* use `chroma` for syntax highlighting -> fix font size, line numbers

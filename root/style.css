@@ -511,9 +511,11 @@ table.directory td.readme-name {
     }
 }
 
+/* TODO: improve styling */
 @media (prefers-color-scheme: dark) {
     body {
-        /* background-color: #334; */
+        background-color: #334!important;
+        filter:invert(1)
     }
 }
 

@@ -3,6 +3,7 @@ module dezip.org/dezip
 go 1.15
 
 require (
+	github.com/alecthomas/chroma/v2 v2.3.0 // indirect
 	github.com/jlaffaye/ftp v0.0.0-20201112195030-9aae4d151126
 	github.com/makeworld-the-better-one/go-gemini v0.11.1
 	github.com/prologic/go-gopher v0.0.0-20201022213256-724979970b3f
