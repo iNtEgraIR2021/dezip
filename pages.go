@@ -14,6 +14,7 @@ import (
 
     "github.com/yuin/goldmark"
     "github.com/yuin/goldmark/extension"
+    "github.com/yuin/goldmark-highlighting/v2"
 
     "dezip.org/dezip/tmlanguage"
 )
@@ -212,7 +213,10 @@ func (p page) writeFileContents(w io.Writer, h *tm.Highlighter, entry *archiveDi
         fmt.Fprintln(w, "<div class='markdown'>")
         bytes, err := ioutil.ReadAll(rc)
         if err == nil {
-            md := goldmark.New(goldmark.WithExtensions(extension.GFM))
+            md := goldmark.New(goldmark.WithExtensions(
+                extension.GFM,
+                highlighting.Highlighting,
+            ))
             if err := md.Convert(bytes, w); err != nil {
                 log.Print(err)
             }
