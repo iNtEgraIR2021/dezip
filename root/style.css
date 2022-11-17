@@ -571,4 +571,17 @@ table.directory td.readme-name {
         background-color: transparent;
         max-width: 99%;
     }
+    pre.header a.logo > svg {
+        fill: rgba(0, 0, 0, 1)!important;
+    }
+    pre.header a,
+    pre.header b {
+        color:rgba(0, 0, 0, 1)!important;
+        text-decoration: none;
+    }
+    #blur,
+    .search-button,
+    td.filename {
+        display: none!important;
+    }
 }
