@@ -425,6 +425,9 @@ table.directory td.readme-name {
 .line-numbers-column {
     width: 64px;
 }
+.chroma .line {
+    font-size: 9pt;
+}
 
 @media (max-width: 670px) {
     .markdown {
@@ -511,7 +514,7 @@ table.directory td.readme-name {
     }
 }
 
-/* TODO: improve styling */
+/* TODO: improve styling of 'code' */
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #25252e!important;
@@ -541,11 +544,22 @@ table.directory td.readme-name {
     table.directory > tbody > tr > td {
         color: #74879b;
     }
+    /* TODO: fix styling of 'plaintext' parts */
     .chroma {
         background-color: #ffffff!important;
         filter: invert(1);
     }
     .readme-container {
+        color: #f5eee2;
+    }
+    pre#search-header {
+        background-color: #2a2a34!important;
+    }
+    pre#search-header > .search-button {
+        color: #f5eee2;
+        stroke: #f5eee2;
+    }
+    pre#search-header input {
         color: #f5eee2;
     }
 }
