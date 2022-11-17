@@ -32,7 +32,7 @@ import (
 
 // the archive that this source code can be found within.  the root of the site
 // redirects to README.md within this archive.
-const thisArchive = "https://dezip.org/dezip-1.0.zip"
+const thisArchive = "https://dezip.org/dezip-1.1.zip"
 
 // how long can the URL's path be before it's rejected?
 const URLPathLimit = 999
