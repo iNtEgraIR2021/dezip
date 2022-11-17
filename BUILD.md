@@ -3,9 +3,9 @@
 first, download and install a recent version of [`oniguruma`](https://github.com/kkos/oniguruma) (dezip needs it for syntax highlighting):
 
 ```bash
-curl -OL https://github.com/kkos/oniguruma/releases/download/v6.9.6/onig-6.9.6.tar.gz
-tar xzf onig-6.9.6.tar.gz
-cd onig-6.9.6
+curl -OL https://github.com/kkos/oniguruma/releases/download/v6.9.8/onig-6.9.8.tar.gz
+tar xzf onig-6.9.8.tar.gz
+cd onig-6.9.8
 ./configure && make && sudo make install
 ```
 
