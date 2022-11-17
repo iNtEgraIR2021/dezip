@@ -514,8 +514,39 @@ table.directory td.readme-name {
 /* TODO: improve styling */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: #334!important;
-        filter:invert(1)
+        background-color: #25252e!important;
+        color: #f5eee2;
+    }
+    .markdown h1,
+    .markdown h2,
+    .markdown h3 {
+        border-color: #f5eee2;
+        color: #f5eee2;
+    }
+    .markdown a {
+        color: #a7a7dd;
+    }
+    .markdown p {
+        color: #f5eee2;
+    }
+    .markdown pre {
+        background-color: #efe8e8!important;
+        filter: invert(1);
+        color: #020202;
+    }
+    td.filename a,
+    td.filename a:hover {
+        color: #a7a7dd;
+    }
+    table.directory > tbody > tr > td {
+        color: #74879b;
+    }
+    .chroma {
+        background-color: #ffffff!important;
+        filter: invert(1);
+    }
+    .readme-container {
+        color: #f5eee2;
     }
 }
 
