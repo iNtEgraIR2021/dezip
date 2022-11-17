@@ -458,7 +458,7 @@ func searchAnchorTags(whichMatch int) (string, string) {
 
 func (p page) writePrologue(w io.Writer) {
 	fmt.Fprintln(w, "<!doctype html>")
-	fmt.Fprintln(w, "<html>")
+	fmt.Fprintln(w, "<html lang='en'>")
 	fmt.Fprintln(w, "  <head>")
 	fmt.Fprintln(w, "    <meta charset='utf-8'>")
 	fmt.Fprintln(w, "    <meta name='viewport' content='initial-scale=0.9'>")
