@@ -132,8 +132,8 @@ func matchLines(content []byte, query string, tags func()(string, string), visit
             // match!  find the original offsets and insert begin/end tags.
             result.lineType = lineTypeMatch
             // this is kind of confusing; index and endIndex refer to positions
-            // in the tagsRemoved slice.  start and end refer to positions in
-            // the line slice.  the offsets slice is used to translate between
+            // in the tagsRemoved slice. start and end refer to positions in
+            // the line slice. the offsets slice is used to translate between
             // the two.
             endIndex := index + len(escapedQuery)
             start := index + offsets[index]

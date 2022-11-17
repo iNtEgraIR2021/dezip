@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alecthomas/chroma/v2/formatters"
+	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/alecthomas/chroma/v2/lexers"
 	"github.com/alecthomas/chroma/v2/styles"
 
@@ -252,7 +252,7 @@ func (p page) writeFileContents(w io.Writer, h *tm.Highlighter, entry *archiveDi
 			} else {
 				// h.Highlight(highlightWriter{w}, buf, entry.file.Name)
 
-				// TODO: remove tml, fix line numbers and font size
+				// TODO: remove tml and fix line numbers
 
 				lexer := lexers.Match(entry.file.Name)
 				if lexer == nil {
@@ -266,10 +266,7 @@ func (p page) writeFileContents(w io.Writer, h *tm.Highlighter, entry *archiveDi
 				if style == nil {
 					style = styles.Fallback
 				}
-				formatter := formatters.Get("html")
-				if formatter == nil {
-					formatter = formatters.Fallback
-				}
+				formatter := chromahtml.New(chromahtml.WithClasses(false), chromahtml.WithLineNumbers(true)) // , chromahtml.WithLinkableLineNumbers(true, "line")
 				iterator, err := lexer.Tokenise(nil, string(buf))
 				if err != nil {
 					fmt.Fprint(w, "error: ", html.EscapeString(err.Error()))

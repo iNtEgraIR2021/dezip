@@ -549,6 +549,15 @@ table.directory td.readme-name {
         background-color: #ffffff!important;
         filter: invert(1);
     }
+    pre.code pre {
+        background: transparent!important;
+    }
+    pre.code pre span {
+        filter: invert(1);
+    }
+    pre.code > span {
+        filter: invert(1);
+    }
     .readme-container {
         color: #f5eee2;
     }
