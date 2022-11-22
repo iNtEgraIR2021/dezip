@@ -198,7 +198,7 @@ func (p page) writeFilePage(w io.Writer, h *tm.Highlighter, entry *archiveDirect
 		if contentType == contentTypeMarkdown {
 			fmt.Fprint(w, "<td>&nbsp;</td><td>")
 		} else {
-			p.writeLineNumbers(w, 1, entry.lines)
+			// p.writeLineNumbers(w, 1, entry.lines)
 			fmt.Fprint(w, "<td valign='top'>")
 		}
 		p.writeFileContents(w, h, entry, contentType)
@@ -266,7 +266,8 @@ func (p page) writeFileContents(w io.Writer, h *tm.Highlighter, entry *archiveDi
 				if style == nil {
 					style = styles.Fallback
 				}
-				formatter := chromahtml.New(chromahtml.WithClasses(false), chromahtml.WithLineNumbers(true)) // , chromahtml.WithLinkableLineNumbers(true, "line")
+				formatter := chromahtml.New(chromahtml.WithClasses(false), chromahtml.WithLineNumbers(true), chromahtml.LinkableLineNumbers(true, "L"))
+
 				iterator, err := lexer.Tokenise(nil, string(buf))
 				if err != nil {
 					fmt.Fprint(w, "error: ", html.EscapeString(err.Error()))
@@ -430,7 +431,7 @@ func (p page) writeSearchResultsPage(w io.Writer, query string, filter string, r
 		} else {
 			fmt.Fprint(w, "<tr class='border'>")
 		}
-		p.writeLineNumbers(w, result.firstLine, result.lines)
+		// p.writeLineNumbers(w, result.firstLine, result.lines)
 		fmt.Fprintf(w, "<td><pre class='code'>\n%s</pre></td></tr>\n", result.html)
 	}
 	if lastFile == "" && query != "" && !hadErrors {

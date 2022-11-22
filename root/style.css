@@ -27,6 +27,11 @@ pre.code {
 pre.file-contents {
     padding: 6px;
     padding-left: 0;
+    width: 98vw;
+}
+pre.file-contents pre {
+    background: transparent!important;
+    font-size: 10pt;
 }
 pre.line-numbers {
     padding-right: 20px;
@@ -557,6 +562,7 @@ table.directory td.readme-name {
     }
     pre.code > span {
         filter: invert(1);
+        font-size: 10pt;
     }
     .readme-container {
         color: #f5eee2;
