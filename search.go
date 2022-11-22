@@ -56,12 +56,12 @@ type searchResultLine struct {
 }
 
 func matchLines(content []byte, query string, tags func() (string, string), visit func(searchResultLine)) {
-	log.Print("matching lines ...")
+	// log.Print("matching lines ...")
 	buf := content
 	// find the searchable region of the file by looking for the
 	// begin and end search markers.
 	start := bytes.Index(buf, []byte(beginSearchMarker))
-	log.Print("line matching -> start: ", start)
+	// log.Print("line matching -> start: ", start)
 	if start < 0 {
 		// if the begin search marker doesn't appear in the file, then the
 		// entire file is just surrounding text.
@@ -71,7 +71,7 @@ func matchLines(content []byte, query string, tags func() (string, string), visi
 	before := buf[:start+len(beginSearchMarker)]
 	buf = buf[start+len(beginSearchMarker):]
 	end := bytes.LastIndex(buf, []byte(endSearchMarker))
-	log.Print("line matching -> end: ", end)
+	// log.Print("line matching -> end: ", end)
 	if end < 0 {
 		// this shouldn't happen, but treat the entire file as surrounding text
 		// if it does.
@@ -79,7 +79,7 @@ func matchLines(content []byte, query string, tags func() (string, string), visi
 		return
 	}
 	after := buf[end:]
-	log.Print("line matching -> after: ", after)
+	// log.Print("line matching -> after: ", after)
 	buf = buf[:end]
 
 	visit(searchResultLine{lineTypeSurrounding, before})
@@ -193,7 +193,7 @@ func (c *cache) search(ar *archive, query string, filter string, results chan se
 		results <- searchResult{err: err}
 		return
 	}
-	startTime := time.Now()
+	// startTime := time.Now()
 	timeout := time.After(searchTimeoutSeconds * time.Second)
 	searched := 0
 	globalMatch := 0
@@ -239,32 +239,32 @@ func (c *cache) search(ar *archive, query string, filter string, results chan se
 			matchLine := -1
 			lineNumber := 1
 			var lines [][]byte
-			log.Print(" before matchLines ")
+			// log.Print(" before matchLines ")
 			matchLines(buf, query, tags, func(line searchResultLine) {
-				log.Print(" starting matchLines ... ")
+				// log.Print(" starting matchLines ... ")
 				if line.lineType == lineTypeSurrounding {
 					return
 				} else if line.lineType == lineTypeMatch {
 					matchLine = len(lines)
 				}
 
-				log.Print(" line.lineType -> ", line.lineType)
+				// log.Print(" line.lineType -> ", line.lineType)
 
 				lineNumber++
-				log.Print(" line number increased ")
+				// log.Print(" line number increased ")
 				lines = append(lines, line.bytes)
-				log.Print(" appended lines ")
+				// log.Print(" appended lines ")
 				if matchLine >= 0 && len(lines) > matchLine+matchContextLinesAfter+matchContextLinesBefore+1 {
-					log.Print(" matched lines after ...")
+					// log.Print(" matched lines after ...")
 					numLines := matchLine + matchContextLinesAfter + 1
-					log.Print(" matched lines after: ", numLines)
+					// log.Print(" matched lines after: ", numLines)
 					results <- searchResult{
 						file:      filename,
 						firstLine: lineNumber - len(lines),
 						lines:     numLines,
 						html:      string(bytes.Join(lines[:numLines], nil)),
 					}
-					log.Print(" modified 'results' ")
+					// log.Print(" modified 'results' ")
 					lines = lines[numLines:]
 					matchLine = -1
 				}
@@ -275,13 +275,13 @@ func (c *cache) search(ar *archive, query string, filter string, results chan se
 					lines = lines[:matchContextLinesBefore]
 					// log.Print(" lines updated ")
 				}
-				log.Print(" completed matchLines condition ")
+				// log.Print(" completed matchLines condition ")
 			})
 
-			log.Print(" matchLines done ")
+			// log.Print(" matchLines done ")
 
 			if matchLine >= 0 {
-				log.Print(" matchLine is greater than 0 ")
+				// log.Print(" matchLine is greater than 0 ")
 				numLines := matchLine + matchContextLinesAfter + 1
 				if numLines > len(lines) {
 					numLines = len(lines)
@@ -295,14 +295,13 @@ func (c *cache) search(ar *archive, query string, filter string, results chan se
 			}
 		}
 	}
-	results <- searchResult{err: fmt.Errorf("searched files: %d; elapsed time: %v", searched, time.Since(startTime))}
+	// results <- searchResult{err: fmt.Errorf("searched files: %d; elapsed time: %v", searched, time.Since(startTime))} //TODO: modify this to display runtime as info message instead of error
 }
 
 func insertSearchAnchors(w io.Writer, r io.Reader, query string) error {
 	var b bytes.Buffer
 	_, err := b.ReadFrom(r)
 	if err != nil {
-		log.Print("returned err -> stack: ", string(debug.Stack())) //TODO: check for errors
 		return err
 	}
 	whichMatch := 0
@@ -311,12 +310,10 @@ func insertSearchAnchors(w io.Writer, r io.Reader, query string) error {
 		return searchAnchorTags(whichMatch)
 	}, func(line searchResultLine) {
 		if err != nil {
-			log.Print("returned err -> stack: ", string(debug.Stack())) //TODO: check for errors
 			return
 		}
 		_, err = w.Write(line.bytes)
 	})
-	log.Print("returned err -> stack: ", string(debug.Stack())) //TODO: check for errors
 	return err
 }
 

@@ -34,7 +34,7 @@ Syntax hightlighting for rendered Markdown content added by Petra Mirelli (@iNtE
 
 ## TODO
 
-* fix search (!)
-* add dark mode -> improve styling: more contrast and less css filter
+* fix search -> done?
+* dark mode -> improve styling: more contrast and less css filter
 * minify content and assets (using [`github.com/tdewolff/minify`](https://github.com/tdewolff/minify)(?))
-* use `chroma` for syntax highlighting -> fix line numbers -> see `WithLinkableLineNumbers`
+* use `chroma` for syntax highlighting -> fix linked line numbers in search results
